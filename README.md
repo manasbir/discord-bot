@@ -1,4 +1,5 @@
 # auto-nerd
+## discord dictionary bot and auto-nerd react to one specific person
 
 To install dependencies:
 
