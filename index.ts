@@ -1,7 +1,7 @@
 import { Client, Collection, GatewayIntentBits, type SlashCommandOptionsOnlyBuilder } from 'discord.js';
 const fs = require('node:fs');
 const path = require('node:path');
-
+const emoji = require('./global');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
 const commands = new Collection();
@@ -31,7 +31,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', async message => {
     if (message.author.id == "569287413281849369") {
-        await message.react("🤓");
+        await message.react(emoji.view_emoji());
     }
     if (message.content.toLowerCase().includes('fuck') && message.author.id != "580403018332241926" && message.author.id != "1254519887297249382") {
         message.reply("man fuck you")

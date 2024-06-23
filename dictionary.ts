@@ -40,7 +40,6 @@ class Dictionary {
 
         const response = await fetch(url);
         const data = (await response.json() as DictionaryResponse[]);
-        console.log(data);
         const embeds = [];
 
         for (let i = 0; i < data.length; i++) {
@@ -55,7 +54,7 @@ class Dictionary {
             let embed = new EmbedBuilder()
             .setColor(0xFFD9EE)
             .setTitle(`**${info.meta.id.split(":")[0]}**`)
-            .setURL(`https://www.merriam-webster.com/dictionary/${info.meta.id}`)
+            .setURL(`https://www.merriam-webster.com/dictionary/${info.meta.id.replace(" ", "%20")}`)
             .setAuthor({ name: 'banger definition', iconURL: 'https://static.wikia.nocookie.net/villains/images/9/9f/Freddy_fazbear_by_monsuirahab-d898wex.png/revision/latest?cb=20231009195005', url: 'https://youtu.be/UCmgGZbfjmk' })
             .setDescription(`**${info.hwi.hw}** | **${pronuncations}** \n ${info.fl}`)
 
