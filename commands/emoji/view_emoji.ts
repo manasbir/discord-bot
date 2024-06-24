@@ -6,6 +6,6 @@ module.exports = {
 		.setName('view_emoji')
 		.setDescription('view yossef\'s emoji to a different one'),
 		async execute(interaction) {
-			await interaction.reply("curr emoji: " + emoji);
+			await interaction.reply("curr emoji: " + emoji.view_emoji());
 		}
 };
