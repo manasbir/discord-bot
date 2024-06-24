@@ -14,4 +14,4 @@ class Emoji {
     }
 }
 
-module.exports = new Emoji(":nerd:");
+module.exports = new Emoji("🤓");
