@@ -38,7 +38,7 @@ client.on('messageCreate', async message => {
         message.reply("man fuck you")
     }
 
-	if (message.content.toLowerCase().replace(/[\s\n]/g, "").includes('ar') /* && message.author.id != SELF_ID */) {
+	if (message.content.toLowerCase().replace(/[\s\n]/g, "").includes('ar') && message.author.id != SELF_ID) {
 		const arRegex = /ar/gi;
 		const replacedMessage = message.content.replace(arRegex, match => `__***${match}***__`);
 		message.reply(replacedMessage + "\n" + AR_AR_AR);
