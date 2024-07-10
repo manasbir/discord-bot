@@ -48,7 +48,6 @@ client.on('messageCreate', async message => {
 });
 
 client.on('interactionCreate', async interaction => {
-    console.log("test")
     if (!interaction.isChatInputCommand()) return;
     const command = commands.get(interaction.commandName);
 
