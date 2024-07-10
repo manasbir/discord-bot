@@ -1,4 +1,5 @@
-import { Client, Collection, GatewayIntentBits, type SlashCommandOptionsOnlyBuilder } from 'discord.js';
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
+import { AR_AR_AR, SELF_ID } from './constants';
 const fs = require('node:fs');
 const path = require('node:path');
 const emoji = require('./global');
@@ -33,9 +34,17 @@ client.on('messageCreate', async message => {
     if (message.author.id == "569287413281849369") {
         await message.react(emoji.view_emoji());
     }
-    if (message.content.toLowerCase().includes('fuck') && message.author.id != "580403018332241926" && message.author.id != "1254519887297249382") {
+    if (message.content.toLowerCase().includes('fuck') && message.author.id != "580403018332241926" /* && message.author.id != SELF_ID */) {
         message.reply("man fuck you")
     }
+
+	if (message.content.toLowerCase().replace(/[\s\n]/g, "").includes('ar') /* && message.author.id != SELF_ID */) {
+		const arRegex = /ar/gi;
+		const replacedMessage = message.content.replace(arRegex, match => `__***${match}***__`);
+		message.reply(replacedMessage + "\n" + AR_AR_AR);
+	}
+	
+
 });
 
 client.on('interactionCreate', async interaction => {

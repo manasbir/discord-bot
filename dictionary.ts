@@ -36,6 +36,7 @@ class Dictionary {
 
 
     async get_info(word: string) {
+        try {
         const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${this.api_key}`
 
         const response = await fetch(url);
@@ -44,6 +45,10 @@ class Dictionary {
 
         for (let i = 0; i < data.length; i++) {
             const info = data[i];
+
+            if (info == undefined) {
+                break;
+            }
 
             if (!info.meta.id.includes(word)) {
                 break;
@@ -76,6 +81,12 @@ class Dictionary {
         }
 
         return {embeds: embeds};
+        } catch (error) {
+            console.log(error);
+            return new EmbedBuilder()
+            .setColor(0xFFD9EE)
+            .setTitle(`**No Definition for: __${word}__**`)
+        }
     }
 
 
