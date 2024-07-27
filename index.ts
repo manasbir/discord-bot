@@ -73,9 +73,9 @@ client.on('messageCreate', async message => {
 		msg = newStr != msg ? `${newStr}\n${WHAT_THE_SIGMA}` : msg;
 
 		const imReg = /\b(im|i\'m)\b\s*(.*)/i;
-		const imFind = message.content.match(imReg);
+		const imFind = msg.match(imReg);
 		if (imFind != null) {
-			msg = "Hi "+ imFind[2] + ", I'm manasbot!"; 
+			await message.reply("Hi "+ imFind[2] + ", I'm manasbot!"); 
 		}
 
 		if (message.content != msg) {
