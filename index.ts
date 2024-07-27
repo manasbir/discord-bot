@@ -1,5 +1,5 @@
-import { Client, Collection, GatewayIntentBits } from 'discord.js';
-import { AR_AR_AR, SELF_ID } from './constants';
+import { Client, Collection, GatewayIntentBits, messageLink } from 'discord.js';
+import { AR_AR_AR, SELF_ID, WHAT_THE_SIGMA } from './constants';
 const fs = require('node:fs');
 const path = require('node:path');
 const emoji = require('./global');
@@ -31,19 +31,60 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', async message => {
-    if (message.author.id == "569287413281849369") {
-        await message.react(emoji.view_emoji());
-    }
-    if (message.content.toLowerCase().includes('fuck') && message.author.id != "580403018332241926" /* && message.author.id != SELF_ID */) {
-        message.reply("man fuck you")
-    }
+	try {
+		if (message.author.id == SELF_ID) {
+			return;
+		}
+		if ( message.author.id == "569287413281849369") {
+			await message.react(emoji.view_emoji());
+		}
 
-	if (message.content.toLowerCase().replace(/[\s\n]/g, "").includes('ar') && message.author.id != SELF_ID) {
+		let msg = message.content;
+
+		if (message.content.toLowerCase().includes('fuck')) {
+			await message.reply("man fuck you")
+		}
+
+		if (message.content.toLowerCase() == "good bot") {
+			await message.reply("kill yourself")
+		}
+
+		const programmerRegex = /\b(==|!=)\b/gi;
+		if (programmerRegex.test(msg)){
+			await message.reply("ohh lookie here. mr programmer.")
+		}
+
+		const erRegex = /\b(\w+)er\b/gi;
+		msg.match(erRegex)?.map(
+			async (word) => await message.reply(`${word.slice(0,-2)} her? I barely even know her!`)
+		)
+
+		const godIsGoodRegex = /\bgod is good\b/gi;
+		if (godIsGoodRegex.test(msg)){
+			await message.reply("you can say that again")
+		}
+
 		const arRegex = /ar/gi;
-		const replacedMessage = message.content.replace(arRegex, match => `__***${match}***__`);
-		message.reply(replacedMessage + "\n" + AR_AR_AR);
+		let newStr = msg.replace(arRegex, match => `__***${match}***__`)
+		msg = newStr != msg ? `${newStr}\n${AR_AR_AR}` : msg;
+
+		const whatRegex = /(\bwhat\b|\bwat\b)/gi;
+		newStr = msg.replace(whatRegex, match => `__***${match}esiggma***__`);
+		msg = newStr != msg ? `${newStr}\n${WHAT_THE_SIGMA}` : msg;
+
+		const imReg = /\b(im|i\'m)\b\s*(.*)/i;
+		const imFind = message.content.match(imReg);
+		if (imFind != null) {
+			msg = "Hi "+ imFind[2] + ", I'm manasbot!"; 
+		}
+
+		if (message.content != msg) {
+			await message.reply(msg);
+		}
+
+	} catch (e) {
+		console.log(e)
 	}
-	
 
 });
 

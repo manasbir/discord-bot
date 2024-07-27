@@ -11,7 +11,7 @@ module.exports = {
 			option.setName('word')
 				.setDescription('word to define')),
 		async execute(interaction) {
-			let res = await dictionary.get_info(interaction.options.getString('word')!)!
-			await interaction.reply(res ? res : "No definition found");
+			let res = await dictionary.get_info(interaction.options.getString('word')!)
+			await interaction.reply(res ? res : "an error occurred");
 		}
 };

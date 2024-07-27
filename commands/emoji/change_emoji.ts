@@ -16,6 +16,6 @@ module.exports = {
 
             emoji.set_emoji(interaction.options.getString('emoji')!);
             console.log("emoji changed to " + emoji.view_emoji());
-			await interaction.reply("Success.... I think? \n new emoji: " + emoji.view_emoji());
+			await interaction.reply("Success.... I think? \nnew emoji: " + emoji.view_emoji());
 		}
 };

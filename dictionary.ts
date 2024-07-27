@@ -40,8 +40,20 @@ class Dictionary {
         const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${this.api_key}`
 
         const response = await fetch(url);
-        const data = (await response.json() as DictionaryResponse[]);
+        let data = (await response.json() as any[]);
         const embeds = [];
+
+        console.log(data);
+
+        if (data.length == 0) {
+            return "No definition or similar word found";
+        }
+
+        if (typeof data[0] == 'string') {
+            return `No definition found for *${word}*, try: ${data[0]}`;
+        } else {
+            data = data as DictionaryResponse[];
+        }
 
         for (let i = 0; i < data.length; i++) {
             const info = data[i];
@@ -50,7 +62,7 @@ class Dictionary {
                 break;
             }
 
-            if (!info.meta.id.includes(word)) {
+            if (info.meta.id.split(":")[0] != word) {
                 break;
             }
 
@@ -59,7 +71,7 @@ class Dictionary {
             let embed = new EmbedBuilder()
             .setColor(0xFFD9EE)
             .setTitle(`**${info.meta.id.split(":")[0]}**`)
-            .setURL(`https://www.merriam-webster.com/dictionary/${info.meta.id.replace(" ", "%20")}`)
+            .setURL(`https://www.merriam-webster.com/dictionary/${encodeURIComponent(info.meta.id)}`)
             .setAuthor({ name: 'banger definition', iconURL: 'https://static.wikia.nocookie.net/villains/images/9/9f/Freddy_fazbear_by_monsuirahab-d898wex.png/revision/latest?cb=20231009195005', url: 'https://youtu.be/UCmgGZbfjmk' })
             .setDescription(`**${info.hwi.hw}** | **${pronuncations}** \n ${info.fl}`)
 
@@ -88,7 +100,7 @@ class Dictionary {
             .setTitle(`**No Definition for: __${word}__**`)
         }
     }
-
+    
 
 }
 
