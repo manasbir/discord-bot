@@ -32,6 +32,8 @@ client.on('ready', () => {
 
 client.on('messageCreate', async message => {
 	try {
+
+		// todo add toggle for annoying stuff
 		if (message.author.id == SELF_ID) {
 			return;
 		}
