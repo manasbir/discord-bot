@@ -51,9 +51,14 @@ client.on('messageCreate', async message => {
 			await message.reply("kill yourself")
 		}
 
-		const programmerRegex = /\b(==|!=)\b/gi;
+		const programmerRegex = /(==|!=)/gi;
 		if (programmerRegex.test(msg)){
-			await message.reply("ohh lookie here. mr programmer.")
+			await message.reply("ohh lookie here. mr programmer.") 
+		}
+
+		const penisRegex = /(penis)/gi;
+		if (penisRegex.test(msg)){
+			await message.reply("hehe penis") 
 		}
 
 		const erRegex = /\b(\w+)er\b/gi;
@@ -66,6 +71,12 @@ client.on('messageCreate', async message => {
 			await message.reply("you can say that again")
 		}
 
+		const imReg = /\b(im|i\'m)\b\s*(.*)/i;
+		const imFind = msg.match(imReg);
+		if (imFind != null) {
+			await message.reply("Hi "+ imFind[2] + ", I'm manasbot!"); 
+		}
+
 		const arRegex = /ar/gi;
 		let newStr = msg.replace(arRegex, match => `__***${match}***__`)
 		msg = newStr != msg ? `${newStr}\n${AR_AR_AR}` : msg;
@@ -74,11 +85,9 @@ client.on('messageCreate', async message => {
 		newStr = msg.replace(whatRegex, match => `__***${match}esiggma***__`);
 		msg = newStr != msg ? `${newStr}\n${WHAT_THE_SIGMA}` : msg;
 
-		const imReg = /\b(im|i\'m)\b\s*(.*)/i;
-		const imFind = msg.match(imReg);
-		if (imFind != null) {
-			await message.reply("Hi "+ imFind[2] + ", I'm manasbot!"); 
-		}
+		if (message.content == "^") {
+			await message.channel.send("^")
+		} 
 
 		if (message.content != msg) {
 			await message.reply(msg);
