@@ -1,6 +1,6 @@
 const {EmbedBuilder} = require('discord.js');
 const fetch = require('node-fetch');
-const romanize = require('./utils.ts');
+import romanize from "./utils";
 
 type DictionaryResponse = {
     meta: MetaInfo;
