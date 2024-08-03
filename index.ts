@@ -82,7 +82,7 @@ client.on("messageCreate", async (message) => {
             await message.reply("you can say that again");
         }
 
-        const imReg = /\b(im|i\'m)\b\s*(.*)/i;
+        const imReg = /\b(im|i\'m|i\sam)\b\s*(.*)/i;
         const imFind = msg.match(imReg);
         if (imFind != null) {
             await message.reply("Hi " + imFind[2] + ", I'm manasbot!");
