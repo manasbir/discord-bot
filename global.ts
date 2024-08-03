@@ -1,17 +1,18 @@
 class Emoji {
-	emoji: string;
+    emoji: string;
 
-	constructor(emoji: string) {
-		this.emoji = emoji;
-	}
+    constructor(emoji: string) {
+        this.emoji = emoji;
+    }
 
-	set_emoji(emoji: string) {
-		this.emoji = emoji;
-	}
+    set_emoji(emoji: string) {
+        this.emoji = emoji;
+    }
 
     view_emoji() {
         return this.emoji;
     }
 }
 
-module.exports = new Emoji("🤓");
+const EmojiInstance = new Emoji("🤓");
+export default EmojiInstance;

@@ -40,7 +40,7 @@ class Dictionary {
         const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${this.api_key}`
 
         const response = await fetch(url);
-        let data = (await response.json() as any[]);
+        const data = (await response.json() as any[]);
         const embeds = [];
 
         console.log(data);
@@ -52,13 +52,13 @@ class Dictionary {
         if (typeof data[0] == 'string') {
             return `No definition found for *${word}*, try: ${data[0]}`;
         } else {
-            data = data as DictionaryResponse[];
+            const parsedData = data as DictionaryResponse[];
         }
 
         for (let i = 0; i < data.length; i++) {
             const info = data[i];
 
-            if (info == undefined) {
+            if (info === undefined) {
                 break;
             }
 
@@ -68,12 +68,12 @@ class Dictionary {
 
             let pronuncations = info.hwi.prs != undefined ? info.hwi.prs.map((pr) => pr.mw).join(", ") : "n/a";
 
-            let embed = new EmbedBuilder()
-            .setColor(0xFFD9EE)
-            .setTitle(`**${info.meta.id.split(":")[0]}**`)
-            .setURL(`https://www.merriam-webster.com/dictionary/${encodeURIComponent(info.meta.id)}`)
-            .setAuthor({ name: 'banger definition', iconURL: 'https://static.wikia.nocookie.net/villains/images/9/9f/Freddy_fazbear_by_monsuirahab-d898wex.png/revision/latest?cb=20231009195005', url: 'https://youtu.be/UCmgGZbfjmk' })
-            .setDescription(`**${info.hwi.hw}** | **${pronuncations}** \n ${info.fl}`)
+            const embed = new EmbedBuilder()
+                .setColor(0xFFD9EE)
+                .setTitle(`**${info.meta.id.split(":")[0]}**`)
+                .setURL(`https://www.merriam-webster.com/dictionary/${encodeURIComponent(info.meta.id)}`)
+                .setAuthor({ name: 'banger definition', iconURL: 'https://static.wikia.nocookie.net/villains/images/9/9f/Freddy_fazbear_by_monsuirahab-d898wex.png/revision/latest?cb=20231009195005', url: 'https://youtu.be/UCmgGZbfjmk' })
+                .setDescription(`**${info.hwi.hw}** | **${pronuncations}** \n ${info.fl}`)
 
             for (let j = 0; j < info.shortdef.length; j++) {
                 embed.addFields({
@@ -92,7 +92,7 @@ class Dictionary {
             return "No definition found";
         }
 
-        return {embeds: embeds};
+        return {embeds};
         } catch (error) {
             console.log(error);
             return new EmbedBuilder()
@@ -104,4 +104,4 @@ class Dictionary {
 
 }
 
-module.exports = Dictionary;
+export default Dictionary;
