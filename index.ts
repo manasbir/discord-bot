@@ -1,4 +1,9 @@
-import { Client, Collection, GatewayIntentBits, type ChatInputCommandInteraction } from "discord.js";
+import {
+    Client,
+    Collection,
+    GatewayIntentBits,
+    type ChatInputCommandInteraction,
+} from "discord.js";
 import { AR_AR_AR, SELF_ID, WHAT_THE_SIGMA } from "./constants";
 import fs from "node:fs";
 import path from "node:path";
@@ -10,6 +15,9 @@ const client = new Client({
         GatewayIntentBits.MessageContent,
     ],
 });
+
+var annoying_mode: boolean;
+annoying_mode = true;
 
 const commands = new Collection<string, ChatInputCommandInteraction>();
 
@@ -42,66 +50,88 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
     try {
         // todo add toggle for annoying stuff
-        if (message.author.id == SELF_ID) {
-            return;
-        }
-        if (message.author.id == "569287413281849369") {
-            await message.react(emoji.view_emoji());
+        if (message.content == "SHUT UP") {
+            annoying_mode = false;
+            await message.reply(":(");
         }
 
-        let msg = message.content;
-
-        if (message.content.toLowerCase().includes("fuck")) {
-            await message.reply("man fuck you");
+        if (message.content == "You may now speak to me, manasbot.") {
+            annoying_mode = true;
+            await message.reply(
+                "Understood, Sir. Apologies for the trouble, it will happen again."
+            );
         }
 
-        if (message.content.toLowerCase() == "good bot") {
-            await message.reply("kill yourself");
-        }
+        if (annoying_mode) {
+            if (message.author.id == SELF_ID) {
+                return;
+            }
+            if (message.author.id == "569287413281849369") {
+                await message.react(emoji.view_emoji());
+            }
 
-        const programmerRegex = /(==|!=)/gi;
-        if (programmerRegex.test(msg)) {
-            await message.reply("ohh lookie here. mr programmer.");
-        }
+            let msg = message.content;
 
-        const penisRegex = /(penis)/gi;
-        if (penisRegex.test(msg)) {
-            await message.reply("hehe penis");
-        }
+            try {
+                new URL(msg);
+                return;
+            } catch (_) {}
 
-        const erRegex = /\b(\w+)er\b/gi;
-        msg.match(erRegex)?.map(
-            async (word) =>
-                await message.reply(
-                    `${word.slice(0, -2)} her? I barely even know her!`
-                )
-        );
+            if (message.content.toLowerCase().includes("fuck")) {
+                await message.reply("man fuck you");
+            }
 
-        const godIsGoodRegex = /\bgod is good\b/gi;
-        if (godIsGoodRegex.test(msg)) {
-            await message.reply("you can say that again");
-        }
+            if (message.content.toLowerCase() == "good bot") {
+                await message.reply("kill yourself");
+            }
 
-        const imReg = /\b(im|i\'m|i\sam)\b\s*(.*)/i;
-        const imFind = msg.match(imReg);
-        if (imFind != null) {
-            await message.reply("Hi " + imFind[2] + ", I'm manasbot!");
-        }
+            const programmerRegex = /(==|!=)/gi;
+            if (programmerRegex.test(msg)) {
+                await message.reply("ohh lookie here. mr programmer.");
+            }
 
-        const arRegex = /ar/gi;
-        let newStr = msg.replace(arRegex, (match) => `__***${match}***__`);
-        msg = newStr != msg ? `${newStr}\n${AR_AR_AR}` : msg;
+            const penisRegex = /(penis)/gi;
+            if (penisRegex.test(msg)) {
+                await message.reply("hehe penis");
+            }
 
-        const whatRegex = /(\bwhat\b|\bwat\b)/gi;
-        newStr = msg.replace(whatRegex, (match) => `__***${match}esiggma***__`);
-        msg = newStr != msg ? `${newStr}\n${WHAT_THE_SIGMA}` : msg;
+            const erRegex = /\b(\w+)er\b/gi;
+            msg.match(erRegex)?.map(
+                async (word) =>
+                    await message.reply(
+                        `${word.slice(0, -2)} her? I barely even know her!`
+                    )
+            );
 
-        if (message.content == "^") {
-            await message.channel.send("^");
-        }
+            const godIsGoodRegex = /\bgod is good\b/gi;
+            if (godIsGoodRegex.test(msg)) {
+                await message.reply("you can say that again");
+            }
 
-        if (message.content != msg) {
-            await message.reply(msg);
+            const imReg = /\b(im|i\'m|i\sam)\b\s*(.*)/i;
+            const imFind = msg.match(imReg);
+            if (imFind != null) {
+                await message.reply("Hi " + imFind[2] + ", I'm manasbot!");
+            }
+
+            const arRegex = /ar/gi;
+            let newStr = msg.replace(arRegex, (match) => `__***${match}***__`);
+            msg = newStr != msg ? `${newStr}\n${AR_AR_AR}` : msg;
+
+            const whatRegex = /(\bwhat\b|\bwat\b)/gi;
+            newStr = msg.replace(
+                whatRegex,
+                (match) => `__***${match}esiggma***__`
+            );
+            msg = newStr != msg ? `${newStr}\n${WHAT_THE_SIGMA}` : msg;
+
+            if (message.content == "^") {
+                await message.channel.send("^");
+            }
+
+            if (message.content != msg) {
+                await message.reply(msg);
+            }
         }
     } catch (e) {
         console.log(e);
