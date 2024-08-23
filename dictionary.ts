@@ -62,8 +62,10 @@ class Dictionary {
                 break;
             }
 
-            if (info.meta.id.split(":")[0] != word) {
+            if ((info.meta.id.split(":")[0] as string).replace(/-/g, '').toLowerCase() !== word.toLowerCase()) {
+                if (!info.meta.stems.includes(word.toLowerCase())) {
                 break;
+                }
             }
 
             let pronuncations = info.hwi.prs != undefined ? info.hwi.prs.map((pr) => pr.mw).join(", ") : "n/a";
