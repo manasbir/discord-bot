@@ -49,7 +49,6 @@ client.on("ready", () => {
 
 client.on("messageCreate", async (message) => {
     try {
-        // todo add toggle for annoying stuff
         if (message.content == "SHUT UP") {
             annoying_mode = false;
             await message.reply(":(");
@@ -68,6 +67,9 @@ client.on("messageCreate", async (message) => {
             }
             if (message.author.id == "569287413281849369") {
                 await message.react(emoji.view_emoji());
+            }
+            if (message.author.id == "305251867200585731") {
+                await message.reply("i love you");
             }
 
             let msg = message.content;
